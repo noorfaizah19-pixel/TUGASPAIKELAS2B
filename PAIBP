@@ -1,0 +1,128 @@
+from pathlib import Path
+
+html = r'''<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Petualangan Cahaya Salat — Kelas 2</title>
+<style>
+:root{--navy:#173b67;--blue:#2775bd;--sky:#eaf6ff;--gold:#ffca55;--mint:#dff8eb;--pink:#ffe5ef;--ink:#20334a;--white:#fff;--shadow:0 10px 30px #173b6718}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:linear-gradient(135deg,#eaf6ff,#fff7df 55%,#effff5);min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;border:0;border-radius:14px;padding:11px 16px;font-weight:800;transition:.15s}button:hover{transform:translateY(-1px);filter:brightness(.98)}button:focus-visible{outline:3px solid #ffad35;outline-offset:3px}
+.primary{background:var(--blue);color:white}.secondary{background:#e7f1ff;color:var(--navy)}.gold{background:var(--gold);color:#493600}.light{background:white;color:var(--navy);border:1px solid #d8e6f4}.danger{background:#ffe8e8;color:#963333}
+header{background:linear-gradient(120deg,#154779,#2b82c8);color:white;padding:22px 18px 30px;position:relative;overflow:hidden}
+header:after{content:"☾ ✦ ✧ ✦";position:absolute;right:5%;top:10px;font-size:30px;opacity:.4;letter-spacing:12px}
+.wrap{max-width:1100px;margin:auto;padding:0 16px}.topline{font-size:.78rem;font-weight:800;letter-spacing:1.4px;opacity:.85}.hero{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:8px}.hero h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.08;margin:8px 0}.hero p{margin:8px 0;max-width:600px;color:#eaf5ff}.mascots{display:flex;gap:10px;margin-left:auto}.kid{width:90px;height:108px;background:#ffffff24;border:1px solid #ffffff55;border-radius:24px;display:grid;place-items:center;font-size:55px;box-shadow:inset 0 0 0 4px #ffffff0c}.kid small{font-size:11px;font-weight:800;display:block;text-align:center;margin-top:-8px}
+main{padding:20px 0 50px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:-10px;position:relative}.stat,.panel,.station{background:white;border:1px solid #e0ebf5;border-radius:20px;box-shadow:var(--shadow)}.stat{padding:14px 16px}.stat b{display:block;font-size:1.35rem;color:var(--navy)}.stat span{font-size:.82rem;color:#61758b}.section-title{display:flex;justify-content:space-between;align-items:end;gap:10px;margin:28px 0 12px}.section-title h2{margin:0;color:var(--navy);font-size:1.35rem}.section-title p{margin:4px 0 0;color:#62788d;font-size:.9rem}
+.map{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.station{padding:14px 12px;text-align:left;min-height:155px;position:relative;color:var(--ink);border-bottom:5px solid #c8e6ff}.station .emoji{font-size:34px;display:block;margin-bottom:8px}.station b{display:block;color:var(--navy);font-size:.94rem}.station small{display:block;color:#62788d;line-height:1.35;margin-top:5px}.station.done{border-bottom-color:#39b980;background:#f1fff7}.station.active{outline:3px solid var(--gold);background:#fffdf3}.station.locked{opacity:.58}.station .check{position:absolute;right:10px;top:8px;color:#219765;font-weight:900}
+.content{margin-top:18px;padding:clamp(18px,3vw,30px)}.mission-head{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.mission-icon{font-size:42px;background:var(--sky);border-radius:18px;padding:12px}.mission-head h2{margin:0;color:var(--navy)}.mission-head p{margin:4px 0;color:#60758a}.tag{display:inline-block;background:#fff3c9;color:#795a00;padding:5px 9px;border-radius:99px;font-size:.76rem;font-weight:800}.activity{margin-top:20px;padding:18px;border-radius:16px;background:#f6fbff;border:1px solid #e1eef9}.question{font-size:1.08rem;font-weight:800;margin:0 0 14px}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{background:white;border:2px solid #dce9f5;text-align:left;color:var(--ink);min-height:54px}.choice.correct{border-color:#35b77b;background:#e8fff2}.choice.wrong{border-color:#e88787;background:#fff0f0}.feedback{margin-top:12px;font-weight:700;min-height:24px}.row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.pill{background:#eaf7ef;color:#18734b;padding:7px 11px;border-radius:99px;font-size:.8rem;font-weight:800}
+.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.prayer-card{background:white;border:2px solid #dce9f5;border-radius:14px;padding:12px;text-align:center}.prayer-card strong{display:block;color:var(--navy)}.prayer-card span{font-size:1.4rem;font-weight:900;color:#2475b9}.prayer-card small{display:block;color:#61758b;margin-top:5px}
+.order-list{display:grid;gap:8px}.order-item{background:white;border:1px solid #d9e8f5;border-radius:12px;padding:10px;display:flex;align-items:center;gap:10px}.order-item select{margin-left:auto;max-width:150px;padding:8px;border-radius:9px;border:1px solid #ccdceb;background:white}
+.checklist{display:grid;gap:10px}.checkline{display:flex;gap:10px;align-items:flex-start;background:white;padding:12px;border-radius:12px;border:1px solid #dfebf5}.checkline input{margin-top:5px;transform:scale(1.2)}
+.cert{background:linear-gradient(135deg,#fff9dc,#f0fff8);border:8px double #e2b63f;border-radius:18px;padding:24px;text-align:center;color:#173b67}.cert h2{font-family:Georgia,serif;font-size:clamp(1.5rem,4vw,2.4rem);margin:8px 0}.cert .bigstar{font-size:42px}.cert input{padding:10px;border:1px solid #c9d9e6;border-radius:10px;width:min(100%,330px);margin:8px 0}
+footer{text-align:center;color:#718399;font-size:.82rem;padding:0 16px 28px}.hidden{display:none!important}.note{background:#fff6d8;border-left:4px solid #efbf39;padding:12px 14px;border-radius:10px;font-size:.9rem}.progress{height:10px;background:#e6eef7;border-radius:99px;overflow:hidden;margin-top:10px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#4fc88d,#f3c64f);transition:width .3s}
+@media(max-width:800px){.map{grid-template-columns:repeat(2,minmax(0,1fr))}.station:last-child{grid-column:span 2}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:480px){.stats{gap:7px}.stat{padding:10px}.stat b{font-size:1.05rem}.stat span{font-size:.72rem}.choices{grid-template-columns:1fr}.kid{width:68px;height:82px;font-size:42px}.map{gap:8px}.station{min-height:140px}.station .emoji{font-size:28px}.station b{font-size:.88rem}.station small{font-size:.76rem}.mission-icon{font-size:32px}}
+@media print{body{background:white}.no-print,header,main>.wrap>.section-title, .stats, #map, #missionPanel,footer{display:none!important}#certificatePanel{display:block!important;box-shadow:none;border:0}.cert{margin:30px auto;max-width:800px;min-height:480px;display:flex;flex-direction:column;justify-content:center}}
+</style>
+</head>
+<body>
+<header>
+ <div class="wrap">
+  <div class="topline">MEDIA PEMBELAJARAN INTERAKTIF • PAI & BUDI PEKERTI</div>
+  <div class="hero">
+   <div><h1>Petualangan<br>Cahaya Salat ✨</h1><p>Misi Anak Saleh Menjelajahi 5 Waktu Salat</p><span class="tag">FASE A • KELAS 2 SD • BAB 4</span></div>
+   <div class="mascots" aria-label="Karakter anak muslim"><div class="kid">👦🏻<small>Rafi</small></div><div class="kid">🧕🏻<small>Aisyah</small></div></div>
+  </div>
+ </div>
+</header>
+<main><div class="wrap">
+ <div class="stats">
+  <div class="stat"><b id="xp">0 XP</b><span>Pengalaman</span></div>
+  <div class="stat"><b id="stars">☆ ☆ ☆</b><span>Bintang terkumpul</span></div>
+  <div class="stat"><b id="progressText">0/5</b><span>Misi selesai</span></div>
+ </div>
+ <div class="section-title"><div><h2>🗺️ Peta Petualangan</h2><p>Pilih pos dan selesaikan misinya untuk membuka perjalanan berikutnya.</p></div><button class="light no-print" onclick="speak('Selamat datang di Petualangan Cahaya Salat. Ayo belajar salat bersama Rafi dan Aisyah!')">🔊 Dengarkan</button></div>
+ <div class="progress"><span id="progressBar"></span></div>
+ <div class="map" id="map"></div>
+ <section class="panel content" id="missionPanel" aria-live="polite"></section>
+ <section class="panel content hidden" id="certificatePanel">
+  <div class="cert">
+   <div class="bigstar">🌟 🕌 🌟</div><div class="tag">PIAGAM PENGHARGAAN</div>
+   <h2>Penjelajah Cahaya Salat</h2>
+   <p>Diberikan kepada</p>
+   <input id="studentName" placeholder="Tuliskan nama murid" aria-label="Nama murid">
+   <p>yang telah menyelesaikan petualangan belajar Bab 4<br><strong>Indahnya Mengabdi kepada Allah Swt.</strong></p>
+   <p>Dengan semangat belajar tentang salat fardu, persiapan salat, gerakan salat, dan disiplin beribadah.</p>
+   <p>⭐ <strong id="certStars">0 bintang</strong> &nbsp; • &nbsp; <strong id="certXP">0 XP</strong></p>
+   <p style="margin-top:28px">Terus berusaha menjadi anak saleh dan disiplin!</p>
+  </div>
+  <div class="row-actions no-print"><button class="primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button><button class="secondary" onclick="showMission(4)">Kembali ke misi</button></div>
+ </section>
+ <div class="note" style="margin-top:18px">📘 Materi disusun berdasarkan PDF Bab 4: <strong>Indahnya Mengabdi kepada Allah Swt.</strong> Gunakan media ini sebagai pendamping belajar dan praktik bersama guru/orang tua.</div>
+</div></main>
+<footer>Petualangan Cahaya Salat • Media edukatif untuk Fase A, Kelas 2 SD</footer>
+<script>
+const stations=[
+ {title:"Gerbang Anak Saleh",icon:"🚪",short:"Kenali misi",desc:"Hukum salat fardu",intro:"Assalamu’alaikum, Penjelajah! Rafi dan Aisyah mengajakmu belajar tentang salat fardu. Siap memulai misi?",type:"quiz"},
+ {title:"Lembah Lima Waktu",icon:"🌅",short:"Kenali 5 salat",desc:"Waktu dan jumlah rakaat",intro:"Ayo bantu Rafi dan Aisyah mengenali lima salat fardu dan jumlah rakaatnya.",type:"prayer"},
+ {title:"Mata Air Kesucian",icon:"💧",short:"Siapkan salat",desc:"Syarat salat",intro:"Sebelum salat, kita perlu mempersiapkan diri. Pilih sikap yang sesuai dengan materi buku.",type:"prep"},
+ {title:"Istana Gerakan Salat",icon:"🕌",short:"Susun urutan",desc:"Rukun dan gerakan salat",intro:"Ayo kenali gerakan salat. Susun nomor urutan gerakan sesuai urutan yang dipelajari.",type:"order"},
+ {title:"Taman Bintang",icon:"🌟",short:"Misi akhir",desc:"Evaluasi dan refleksi",intro:"Ini misi terakhir! Jawab pertanyaan, lalu renungkan kebiasaan salatmu.",type:"final"}
+];
+let completed=new Set(), xp=0, answered=new Set(), active=0;
+const questions=[
+ {q:"Hukum melaksanakan salat fardu bagi umat Islam adalah …",opts:["Sunah","Wajib","Mubah","Makruh"],a:1,why:"Dalam buku, salat fardu dijelaskan sebagai ibadah wajib bagi setiap Muslim."},
+ {q:"Salat Subuh berjumlah … rakaat.",opts:["2 rakaat","3 rakaat","4 rakaat","5 rakaat"],a:0,why:"Salat Subuh dilaksanakan sebelum matahari terbit dan berjumlah 2 rakaat."},
+ {q:"Salat yang dilaksanakan setelah matahari terbenam adalah …",opts:["Zuhur","Asar","Magrib","Subuh"],a:2,why:"Buku menyebutkan salat Magrib dilaksanakan setelah matahari terbenam."},
+ {q:"Sebelum salat, ketika berhadas kita perlu …",opts:["Langsung salat","Berwudu","Meneruskan bermain","Membuka penutup aurat"],a:1,why:"Buku menjelaskan bahwa sebelum salat kita bersuci dari hadas dengan berwudu."},
+ {q:"Gerakan membungkukkan badan dengan kedua tangan di lutut disebut …",opts:["Salam","Sujud","Rukuk","Iktidal"],a:2,why:"Rukuk adalah gerakan membungkukkan badan; lakukan dengan tenang."},
+ {q:"Saat azan Zuhur terdengar ketika sedang bermain, sikap yang tepat adalah …",opts:["Mengabaikan azan","Mengajak teman bermain lebih lama","Bersiap untuk salat","Menunggu sampai malam"],a:2,why:"Buku mengajarkan agar kita segera bersiap dan tidak menunda-nunda ketika waktu salat tiba."},
+ {q:"Jumlah seluruh rakaat salat fardu sehari semalam adalah …",opts:["15 rakaat","17 rakaat","18 rakaat","20 rakaat"],a:1,why:"Jumlahnya 2 + 4 + 4 + 3 + 4 = 17 rakaat."},
+ {q:"Gerakan salat dilakukan secara berurutan dan tidak melompati gerakan. Sikap ini disebut …",opts:["Tertib","Terburu-buru","Bermain","Berhenti"],a:0,why:"Tertib berarti melakukan rukun salat secara berurutan."}
+];
+function renderMap(){
+ const map=document.getElementById('map');map.innerHTML='';
+ stations.forEach((s,i)=>{let b=document.createElement('button');b.className='station '+(completed.has(i)?'done ':'')+(i===active?'active ':'')+(i>0&&!completed.has(i-1)?'locked':'');b.innerHTML=`<span class="emoji">${s.icon}</span><b>${i+1}. ${s.title}</b><small>${s.desc}</small>${completed.has(i)?'<span class="check">✓</span>':''}`;b.onclick=()=>{if(i===0||completed.has(i-1)||completed.has(i)){showMission(i)}else{alert('Selesaikan pos sebelumnya terlebih dahulu, ya!')}};map.appendChild(b)});
+ document.getElementById('xp').textContent=xp+' XP';document.getElementById('stars').textContent='★ '.repeat(completed.size)+'☆ '.repeat(5-completed.size);document.getElementById('progressText').textContent=completed.size+'/5';document.getElementById('progressBar').style.width=(completed.size*20)+'%';
+}
+function showMission(i){active=i;renderMap();document.getElementById('certificatePanel').classList.add('hidden');const p=document.getElementById('missionPanel');p.classList.remove('hidden');let s=stations[i];let html=`<div class="mission-head"><div class="mission-icon">${s.icon}</div><div><span class="tag">POS ${i+1} DARI 5</span><h2>${s.title}</h2><p>${s.intro}</p></div></div>`;
+ if(i===0) html+=quizBlock(0,"Mulai petualangan");
+ if(i===1) html+=prayerBlock();
+ if(i===2) html+=prepBlock();
+ if(i===3) html+=orderBlock();
+ if(i===4) html+=quizBlock(1,"Selesaikan evaluasi");
+ p.innerHTML=html;
+ if(i===0) wireQuiz('q0',0,0);
+ if(i===1) wirePrayer();
+ if(i===2) wirePrep();
+ if(i===3) wireOrder();
+ if(i===4) wireQuiz('q1',1,4);
+}
+function quizBlock(final=false,label){let qs=final?questions.slice(3,8):questions.slice(0,1);return `<div class="activity"><p class="question">${final?'Evaluasi akhir: jawablah 5 pertanyaan berikut.':'Tantangan: '+qs[0].q}</p>${final?qs.map((q,j)=>`<div style="margin:18px 0"><p><strong>${j+1}. ${q.q}</strong></p><div class="choices">${q.opts.map((o,k)=>`<button class="choice" data-q="${j}" data-a="${k}">${String.fromCharCode(65+k)}. ${o}</button>`).join('')}</div><div class="feedback" id="fb${j}"></div></div>`).join(''):`<div class="choices">${qs[0].opts.map((o,k)=>`<button class="choice" data-q="0" data-a="${k}">${String.fromCharCode(65+k)}. ${o}</button>`).join('')}</div><div class="feedback" id="fb0"></div>`}<div class="row-actions"><button class="primary" id="finishQuiz" disabled>${label} →</button><button class="light" onclick="speak('${(final?'Ayo jawab evaluasi akhir dengan tenang.':'Pilih jawaban yang menurutmu benar.').replace(/'/g,"\\'")}')">🔊 Petunjuk suara</button></div></div>`}
+function wireQuiz(id,final,station){
+ let qs=final?questions.slice(3,8):questions.slice(0,1), answers={};
+ document.querySelectorAll('.choice[data-q]').forEach(btn=>btn.onclick=()=>{
+  let qi=+btn.dataset.q,ai=+btn.dataset.a,q=qs[qi];answers[qi]=ai;
+  document.querySelectorAll(`.choice[data-q="${qi}"]`).forEach(x=>{x.classList.remove('correct','wrong');x.disabled=true});
+  btn.classList.add(ai===q.a?'correct':'wrong');document.getElementById('fb'+qi).textContent=(ai===q.a?'Hebat! ':'Belum tepat. ')+q.why;
+  if(Object.keys(answers).length===qs.length){let f=document.getElementById('finishQuiz');f.disabled=false;f.textContent='Lihat hasil dan lanjutkan →'}
+ });
+ document.getElementById('finishQuiz').onclick=()=>{let score=qs.reduce((n,q,j)=>n+(answers[j]===q.a?1:0),0);let gain=score*10;xp+=gain;complete(station);if(final){document.getElementById('certStars').textContent=completed.size+' bintang';document.getElementById('certXP').textContent=xp+' XP';document.getElementById('missionPanel').classList.add('hidden');document.getElementById('certificatePanel').classList.remove('hidden')}else showMission(1);renderMap();};
+}
+function prayerBlock(){let data=[['Subuh','2','Sebelum matahari terbit','🌄'],['Zuhur','4','Siang hari','☀️'],['Asar','4','Sore hari','🌤️'],['Magrib','3','Setelah matahari terbenam','🌇'],['Isya','4','Malam hari','🌙']];return `<div class="activity"><p class="question">Ketuk kartu untuk mendengar nama salat dan jumlah rakaatnya.</p><div class="cards">${data.map(d=>`<button class="prayer-card" data-prayer="${d[0]}"><span>${d[3]}</span><strong>${d[0]}</strong><span>${d[1]}</span><small>rakaat<br>${d[2]}</small></button>`).join('')}</div><p class="pill" style="margin-top:14px">Ingat: total 5 waktu = 17 rakaat.</p><div class="row-actions"><button class="primary" id="prayerDone">Saya siap ke pos berikutnya →</button></div></div>`}
+function wirePrayer(){document.querySelectorAll('[data-prayer]').forEach(b=>b.onclick=()=>{let d=b.dataset.prayer;let item={Subuh:'2 rakaat, sebelum matahari terbit',Zuhur:'4 rakaat, siang hari',Asar:'4 rakaat, sore hari',Magrib:'3 rakaat, setelah matahari terbenam',Isya:'4 rakaat, malam hari'}[d];speak('Salat '+d+', '+item)});document.getElementById('prayerDone').onclick=()=>{xp+=20;complete(1);showMission(2)}}
+function prepBlock(){let items=['Berwudu untuk bersuci dari hadas.','Menjaga badan dan pakaian suci dari najis.','Menutup aurat.','Menghadap kiblat.','Menjaga ketenangan dan tidak bermain-main saat salat.'];return `<div class="activity"><p class="question">Pilih semua persiapan atau sikap yang sesuai dengan materi.</p><div class="checklist">${items.map((t,i)=>`<label class="checkline"><input type="checkbox" value="${i}"><span>${t}</span></label>`).join('')}</div><div class="feedback" id="prepFeedback"></div><div class="row-actions"><button class="primary" id="prepCheck">Periksa pilihan</button><button class="light" onclick="speak('Sebelum salat, perhatikan kesucian, aurat, arah kiblat, dan lakukan salat dengan tertib.')">🔊 Dengarkan petunjuk</button></div></div>`}
+function wirePrep(){document.getElementById('prepCheck').onclick=()=>{let n=document.querySelectorAll('.checkline input:checked').length;let f=document.getElementById('prepFeedback');if(n===5){f.textContent='Bagus! Kamu mengenali semua persiapan dan sikap yang dipelajari.';xp+=20;complete(2);setTimeout(()=>showMission(3),850)}else f.textContent='Coba periksa kembali. Dalam materi ini ada lima persiapan dan sikap yang perlu kamu kenali.'}}
+const moves=['Niat dan takbiratul ihram','Berdiri tegak dan membaca Al-Fatihah','Rukuk dengan tumakninah','Iktidal','Sujud dua kali dengan tumakninah','Duduk di antara dua sujud','Duduk tasyahud akhir dan membaca selawat','Salam serta tertib'];
+function orderBlock(){return `<div class="activity"><p class="question">Pilih nomor urutan untuk setiap gerakan. Gunakan urutan 1 sampai 8.</p><div class="order-list">${moves.map((m,i)=>`<label class="order-item"><span>${m}</span><select aria-label="Urutan ${m}" data-move="${i}"><option value="">Pilih</option>${moves.map((_,j)=>`<option value="${j+1}">${j+1}</option>`).join('')}</select></label>`).join('')}</div><div class="feedback" id="orderFeedback"></div><div class="row-actions"><button class="primary" id="orderCheck">Periksa urutan</button><button class="light" onclick="speak('Lakukan gerakan salat dengan tertib dan tumakninah, artinya tenang.')">🔊 Dengarkan petunjuk</button></div><p class="note">Catatan: daftar ini merangkum urutan gerakan dan rukun yang dicantumkan dalam PDF. Praktikkan bersama guru untuk mempelajari bacaan dan gerakannya dengan benar.</p></div>`}
+function wireOrder(){document.getElementById('orderCheck').onclick=()=>{let sels=[...document.querySelectorAll('[data-move]')];let vals=sels.map(s=>s.value);let good=vals.every((v,i)=>v===String(i+1))&&new Set(vals).size===8;let f=document.getElementById('orderFeedback');if(good){f.textContent='Masyaallah, urutanmu benar! Ingat untuk salat dengan tenang (tumakninah).';xp+=30;complete(3);setTimeout(()=>showMission(4),900)}else f.textContent='Belum tepat. Susun sesuai daftar urutan dari awal sampai akhir. Pastikan setiap nomor dipakai satu kali.'}}
+function complete(i){completed.add(i);renderMap();if(completed.size===5){document.getElementById('certStars').textContent=completed.size+' bintang';document.getElementById('certXP').textContent=xp+' XP'}}
+function speak(text){if(!('speechSynthesis'in window)){alert('Audio narasi tidak didukung browser ini. Silakan baca petunjuk pada layar.');return}window.speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang='id-ID';u.rate=.92;u.pitch=1;u.volume=.85;window.speechSynthesis.speak(u)}
+renderMap();showMission(0);
+</script>
+</body></html>'''
+path = Path("/mnt/data/petualangan_cahaya_salat_kelas2.html")
+path.write_text(html, encoding="utf-8")
+print(f"Prototipe HTML dibuat: {path} ({path.stat().st_size:,} byte)")
